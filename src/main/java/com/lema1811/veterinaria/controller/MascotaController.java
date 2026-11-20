@@ -1,6 +1,7 @@
 package com.lema1811.veterinaria.controller;
 
 import com.lema1811.veterinaria.model.Mascota;
+import com.lema1811.veterinaria.model.Medicamento;
 import com.lema1811.veterinaria.services.MascotaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,15 @@ public class MascotaController {
         return mascotaService.editar(id, mascota)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity <Mascota> eliminar (@PathVariable int id){
+        if (mascotaService.eliminar(id)){
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/especie/{especie}")
