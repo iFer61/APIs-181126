@@ -43,6 +43,16 @@ public class MascotaService {
                     return mascotaRepository.save(mascotaExiste);
                 });
     }
+
+    //ELIMINAR
+    public boolean eliminar (int id){
+        if ( mascotaRepository.existsById(id)){
+            mascotaRepository.deleteById(id);
+            return true;
+        }else{
+            return false;
+        }
+    }
     public List<Mascota> buscarPorEspecie(String especie) {
         return mascotaRepository.findByEspecieIgnoreCase(especie);
     }
