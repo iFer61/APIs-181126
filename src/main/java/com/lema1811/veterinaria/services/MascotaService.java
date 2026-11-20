@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.Mac;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MascotaService {
@@ -40,6 +42,17 @@ public class MascotaService {
 
                     return mascotaRepository.save(mascotaExiste);
                 });
+    }
+    public List<Mascota> buscarPorEspecie(String especie) {
+        return mascotaRepository.findByEspecieIgnoreCase(especie);
+    }
+
+    public Map<String, Long> contarPorEspecie() {
+        return mascotaRepository.findAll().stream()
+                .collect(Collectors.groupingBy(
+                        m -> m.getEspecie() != null ? m.getEspecie().toLowerCase() : "sin_especie",
+                        Collectors.counting()
+                ));
     }
 
 }

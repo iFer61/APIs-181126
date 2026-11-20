@@ -52,6 +52,23 @@ public class MedicamentoController {
         }else{
             return ResponseEntity.notFound().build();
         }
+    }
 
+    @GetMapping("/stock-bajo")
+    public ResponseEntity<List<Medicamento>> buscarStockBajo(
+            @RequestParam(defaultValue = "5") int minimo) {
+        return ResponseEntity.ok(medicamentoService.buscarStockBajo(minimo));
+    }
+
+    @GetMapping("/venta-libre")
+    public ResponseEntity<List<Medicamento>> buscarVentaLibre() {
+        return ResponseEntity.ok(medicamentoService.buscarVentaLibre());
+    }
+
+    @PutMapping("/{id}/despachar")
+    public ResponseEntity<Medicamento> despachar(
+            @PathVariable int id,
+            @RequestParam int cantidad) {
+        return ResponseEntity.ok(medicamentoService.despachar(id, cantidad));
     }
 }

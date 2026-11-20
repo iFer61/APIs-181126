@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/mascota")
@@ -41,4 +42,15 @@ public class MascotaController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/especie/{especie}")
+    public ResponseEntity<List<Mascota>> buscarPorEspecie(@PathVariable String especie) {
+        return ResponseEntity.ok(mascotaService.buscarPorEspecie(especie));
+    }
+
+    @GetMapping("/conteo-especies")
+    public ResponseEntity<Map<String, Long>> contarPorEspecie() {
+        return ResponseEntity.ok(mascotaService.contarPorEspecie());
+    }
+
 }
